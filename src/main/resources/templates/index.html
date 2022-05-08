@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Crypto Currency Converter</title>
+
+    <link th:rel="stylesheet" th:href="@{/assets/bootstrap-select-1.13.18/css/bootstrap-select.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css} "/>
+</head>
+<body>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/bootstrap-select-1.13.18/js/bootstrap-select.js}"></script>
+
+<div class="container align-content-center">
+
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-4 mt-5">
+            <form method="post" th:object="${cryptoCurrencyConvertRequest}">
+
+                <div class="form-group">
+                    <label for="cryptocurrency">Choose Cryptocurrency</label>
+                    <select class="form-control selectpicker" th:field="*{cryptoCurrencyCode}" id="cryptocurrency">
+                        <option value="">Nothing selected</option>
+                        <!--<option th:each="pizza : ${T(com.frontbackend.thymeleaf.bootstrap.model.Pizza).values()}"
+                                th:value="${pizza}"
+                                th:text="${pizza}">pizza
+                        </option>-->
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ipAddress">IP Address</label>
+                    <input name="ipAddress" id="ipAddress" th:field="*{ipAddress}" type="text" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
+                </div>
+
+                <button class="btn btn-primary" type="submit">Convert</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

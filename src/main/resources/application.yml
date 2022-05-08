@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: cryptocurrency-service
+  datasource:
+    url: ${DATABASE_SERVER:jdbc:h2:file:./data/crypto-service-db}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:9pK2bMduzuMGK5}
+    driverClassName: org.h2.Driver
+  h2:
+    console.enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+# Server PORT
+server:
+  port: 9000
+
+
+coincap:
+  assets-url: "https://api.coincap.io/v2/assets"
+  live-prices-ws-url: "wss://ws.coincap.io/prices?assets=ALL"
+  currency-rates-url: "https://api.coincap.io/v2/rates"
+  api-key: "63ddd13a-9083-49e0-af0a-aa141c3363f1"
