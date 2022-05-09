@@ -23,15 +23,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.expression.Lists;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Service Layer for Crypto Currency Conversion
@@ -88,7 +94,7 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
     /**
      * This method is used to convert to local currency
      * @param cryptoCurrencyConvert     - crypto currency convert request
-     * @param request                   - http servet request
+     * @param request                   - http servlet request
      * @param model                     - model
      */
     @Override
@@ -97,7 +103,9 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
         String ipAddress = StringUtils.defaultIfBlank(cryptoCurrencyConvert.getIpAddress(), HttpUtil.getClientIP(request));
         CryptoCurrencyConvertResponse cryptoCurrencyConvertResponse = new CryptoCurrencyConvertResponse();
         try {
+            // get location by ip
             String country = geoIPLocationService.getLocation(ipAddress);
+            // convert to local currency
             String conversionResponse = currencyService.convertToLocalCurrency(cryptoCurrency, country);
             cryptoCurrencyConvertResponse.setSuccess(conversionResponse);
         } catch (IOException | GeoIp2Exception e) {
@@ -105,6 +113,27 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
             cryptoCurrencyConvertResponse.setError(e.getMessage());
         }
         model.addAttribute("convertResponse", cryptoCurrencyConvertResponse);
+    }
+
+    @Override
+    public void handleWSResponse(JsonNode wsResponse) {
+        Map<String, BigDecimal> latestPrices = new LinkedHashMap<>();
+        Iterator<Map.Entry<String, JsonNode>> iterator = wsResponse.fields();
+        while (iterator.hasNext()) {
+            Map.Entry<String, JsonNode> entry = iterator.next();
+            latestPrices.put(entry.getKey(), new BigDecimal(entry.getValue().asText()));
+        }
+        List<CryptoCurrency> cryptoCurrencyList = cryptoCurrencyRepository.findByCodeIn(latestPrices.keySet());
+        if(!CollectionUtils.isEmpty(cryptoCurrencyList)) {
+
+            cryptoCurrencyList.forEach(cryptoCurrency -> {
+                BigDecimal latestPrice = latestPrices.get(cryptoCurrency.getCode());
+                Optional.ofNullable(latestPrice).ifPresent(cryptoCurrency::setRateUSD);
+            });
+
+            cryptoCurrencyRepository.saveAll(cryptoCurrencyList);
+        }
+
     }
 
     /**

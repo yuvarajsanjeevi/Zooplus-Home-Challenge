@@ -2,6 +2,7 @@ package com.cryptocurrency.service.service;
 
 import com.cryptocurrency.service.model.CryptoCurrency;
 import com.cryptocurrency.service.model.CryptoCurrencyConvert;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,4 +19,6 @@ public interface CryptoCurrencyService {
     List<CryptoCurrency> getAll();
 
     void convertToLocalCurrency(CryptoCurrencyConvert cryptoCurrencyConvert, HttpServletRequest request, Model model);
+
+    void handleWSResponse(JsonNode wsResponse);
 }

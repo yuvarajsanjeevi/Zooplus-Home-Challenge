@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * Repository Layer for {@link CryptoCurrency}
  * @author yuvaraj.sanjeevi
@@ -21,6 +24,9 @@ public interface CryptoCurrencyRepository extends JpaRepository<CryptoCurrency, 
     void truncateTable();
 
     CryptoCurrency findTopBySymbol(String symbol);
+
+
+    List<CryptoCurrency> findByCodeIn(Set<String> code);
 
 
 }

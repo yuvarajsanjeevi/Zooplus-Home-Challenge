@@ -34,7 +34,7 @@ public class CryptoCurrency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
 
     @Column(name = "name")
@@ -46,7 +46,7 @@ public class CryptoCurrency {
     @Column(name = "symbol")
     private String symbol;
 
-    @Column(name = "rate_usd", precision = 25, scale = 16)
+    @Column(name = "rate_usd", precision = 16, scale = 8)
     private BigDecimal rateUSD;
 
     @CreationTimestamp
