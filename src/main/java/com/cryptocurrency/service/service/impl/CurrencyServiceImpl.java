@@ -4,7 +4,6 @@ import com.cryptocurrency.service.config.ExternalApiConfig;
 import com.cryptocurrency.service.entity.CryptoCurrency;
 import com.cryptocurrency.service.service.CurrencyService;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;

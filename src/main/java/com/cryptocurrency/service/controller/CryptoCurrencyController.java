@@ -24,7 +24,7 @@ public class CryptoCurrencyController {
     private final CryptoCurrencyService cryptoCurrencyService;
 
     @GetMapping("/showForm")
-    public String main(Model model) {
+    public String showForm(Model model) {
         model.addAttribute("cryptoCurrencyConvertRequest", new CryptoCurrencyConvert());
         model.addAttribute("cryptoCurrencyList", cryptoCurrencyService.getAll());
         return "index";

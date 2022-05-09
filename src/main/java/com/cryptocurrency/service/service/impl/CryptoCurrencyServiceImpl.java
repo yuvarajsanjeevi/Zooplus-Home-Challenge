@@ -27,7 +27,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.thymeleaf.expression.Lists;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -108,7 +107,7 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
             // convert to local currency
             String conversionResponse = currencyService.convertToLocalCurrency(cryptoCurrency, country);
             cryptoCurrencyConvertResponse.setSuccess(conversionResponse);
-        } catch (IOException | GeoIp2Exception e) {
+        } catch (Exception e) {
             log.error("Error Occurred", e);
             cryptoCurrencyConvertResponse.setError(e.getMessage());
         }
@@ -142,7 +141,7 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
      * @return                          - cryptocurrency entity
      */
     private CryptoCurrency findCryptoCurrencyBySymbol(String cryptoCurrencySymbol) {
-        return cryptoCurrencyRepository.findTopBySymbol(cryptoCurrencySymbol);
+        return Optional.ofNullable(cryptoCurrencyRepository.findTopBySymbol(cryptoCurrencySymbol)).orElseThrow(() -> new RuntimeException("Invalid Cryptocurrency"));
     }
 
     /**
