@@ -18,27 +18,40 @@
 
     <div class="d-flex justify-content-center row">
         <div class="col-md-4 mt-5">
-            <form method="post" th:object="${cryptoCurrencyConvertRequest}">
+            <form id="convert-currency-form" method="post" th:action="@{/cryptoCurrencies/convertToLocalCurrency}"
+                  th:object="${cryptoCurrencyConvertRequest}">
 
-                <div class="form-group">
-                    <label for="cryptocurrency">Choose Cryptocurrency</label>
-                    <select class="form-control selectpicker" th:field="*{cryptoCurrencyCode}" id="cryptocurrency">
-                        <option value="">Nothing selected</option>
-                        <!--<option th:each="pizza : ${T(com.frontbackend.thymeleaf.bootstrap.model.Pizza).values()}"
-                                th:value="${pizza}"
-                                th:text="${pizza}">pizza
-                        </option>-->
-
+                <div class="form-group required">
+                    <label for="cryptocurrency" class="control-label">Cryptocurrency:</label>
+                    <select class="form-control selectpicker" data-live-search="true" th:field="*{cryptoCurrencySymbol}"
+                            id="cryptocurrency" title="Choose Cryptocurrency" required>
+                        <option th:each="cryptoCurrency : ${cryptoCurrencyList}"
+                                th:value="${cryptoCurrency.getSymbol()}"
+                                data-tokens="${cryptoCurrency.getName()}"
+                                th:text="${cryptoCurrency.getName()}">cryptoCurrency.getName()
+                        </option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="ipAddress">IP Address</label>
-                    <input name="ipAddress" id="ipAddress" th:field="*{ipAddress}" type="text" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
+                    <label for="ipAddress">IP Address:</label>
+                    <input name="ipAddress" id="ipAddress" th:field="*{ipAddress}" type="text" title="Please enter valid IP Address."
+                           pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$" placeholder="xxx.xxx.xxx.xx">
                 </div>
 
-                <button class="btn btn-primary" type="submit">Convert</button>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary" type="submit" id="convert">Convert</button>
+                </div>
             </form>
+
+            <div class="text-center">
+                <span style="white-space: pre-line"
+                      th:if="${convertResponse != null && convertResponse.success != null}"
+                      th:text="${convertResponse.success}"></span>
+                <span class="alert-danger" style="white-space: pre-line"
+                      th:if="${convertResponse != null && convertResponse.error != null}"
+                      th:text="${convertResponse.error}"></span>
+            </div>
         </div>
     </div>
 

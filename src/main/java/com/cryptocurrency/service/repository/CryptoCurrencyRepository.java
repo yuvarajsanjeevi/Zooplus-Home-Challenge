@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Repository Layer for {@link CryptoCurrency}
  * @author yuvaraj.sanjeevi
  */
 @Repository
@@ -18,5 +19,8 @@ public interface CryptoCurrencyRepository extends JpaRepository<CryptoCurrency, 
     @Query(value = "truncate table crypto_currencies", nativeQuery = true)
     @Transactional
     void truncateTable();
+
+    CryptoCurrency findTopBySymbol(String symbol);
+
 
 }

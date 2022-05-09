@@ -1,6 +1,6 @@
 package com.cryptocurrency.service.config;
 
-import com.cryptocurrency.service.services.CryptoCurrencyService;
+import com.cryptocurrency.service.service.CryptoCurrencyService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 

@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class CryptoCurrencyConvert {
 
-    private String cryptoCurrencyCode;
+    private String cryptoCurrencySymbol;
     private String ipAddress;
 }
