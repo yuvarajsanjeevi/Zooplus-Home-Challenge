@@ -19,6 +19,11 @@
    * H2 Database
    * Mockito
    * Lombok 
+   * Maxmind GeoIP2
+   * External APIs
+       * https://api.coincap.io (CryptoCurrency Prices)
+       * https://api.frankfurter.app/latest (Currency Converter)
+ 
  
 Project Summary
    * Consume live prices from websocket API
