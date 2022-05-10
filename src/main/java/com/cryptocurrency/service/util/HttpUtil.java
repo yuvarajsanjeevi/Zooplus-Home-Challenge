@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * @author yuvaraj.sanjeevi
@@ -15,11 +16,11 @@ public class HttpUtil {
      * This method is used to get client ip
      * @param request               - http request
      * @param otherHeaderNames      - other headers to lookup
-     * @return                      - clientt ip address
+     * @return                      - client ip address
      */
     public static String getClientIP(HttpServletRequest request, String... otherHeaderNames) {
         String[] headers = {"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
-        if(ArrayUtils.isNotEmpty(headers)){
+        if(ArrayUtils.isNotEmpty(otherHeaderNames)){
             headers = ArrayUtils.addAll(headers, otherHeaderNames);
         }
 
