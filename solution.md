@@ -30,7 +30,22 @@ Project Summary
    * Created form to show cryptocurrency drop down and convert button
    * Junit + Mockito for unit testing
    * Spotify maven plugin for docker image build
-    
+
+For building and running the application you need:
+
+- [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11)
+- [Maven 3.3](https://maven.apache.org)
+
+## Running the application locally
+
+There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.cryptocurrency.service.CryptoCurrencyServiceApplication` class from your IDE.
+
+Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
+
+```shell
+mvn spring-boot:run
+```
+   
 ### Build this docker
   * With Maven Plugin
   
